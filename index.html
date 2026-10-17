@@ -32,9 +32,9 @@
 
     <section class="chooser" aria-label="Pobieranie">
       <div class="bar">
-        <div class="seg seg-os" id="os" role="radiogroup" data-i18n-aria="os_label" aria-label="System operacyjny">
-          <label><input type="radio" name="os" value="windows"><span><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4.5" width="18" height="15" rx="2.5"/><path d="M3 9.5h18"/></svg>Windows</span></label>
-          <label><input type="radio" name="os" value="linux"><span><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 7l5 5-5 5"/><path d="M12.5 17H19"/></svg>Linux</span></label>
+        <div class="seg" id="os" role="radiogroup" data-i18n-aria="os_label" aria-label="System operacyjny">
+          <label><input type="radio" name="os" value="windows"><span>Windows</span></label>
+          <label><input type="radio" name="os" value="linux"><span>Linux</span></label>
         </div>
         <label class="version">
           <span data-i18n="version">Wersja</span>
@@ -92,29 +92,7 @@
         <li data-i18n-html="lin_3"></li>
       </ol>
       <p class="note" data-i18n="models_note"></p>
-    </section>
-
-    <section class="reqs" aria-labelledby="req-title">
-      <h2 id="req-title" data-i18n="req_title">Przykładowe wymagania formalne</h2>
-      <p class="note" data-i18n="req_note"></p>
-      <ul class="list">
-        <li class="row">
-          <div class="info">
-            <p class="name" data-i18n="req_eng">Praca inżynierska</p>
-            <p class="desc" data-req-summary="assets/requirements/wymagania_inz.json"></p>
-          </div>
-          <span class="size">JSON</span>
-          <a class="btn btn-secondary" data-req-link="req_eng" href="assets/requirements/wymagania_inz.json" download="wymagania_inz.json" data-i18n="req_download">Pobierz JSON</a>
-        </li>
-        <li class="row">
-          <div class="info">
-            <p class="name" data-i18n="req_msc">Praca magisterska</p>
-            <p class="desc" data-req-summary="assets/requirements/wymagania_mag.json"></p>
-          </div>
-          <span class="size">JSON</span>
-          <a class="btn btn-secondary" data-req-link="req_msc" href="assets/requirements/wymagania_mag.json" download="wymagania_mag.json" data-i18n="req_download">Pobierz JSON</a>
-        </li>
-      </ul>
+      <p class="note" data-i18n-html="req_hint"></p>
     </section>
 
     <figure class="shot">
@@ -130,6 +108,7 @@
   <footer class="wrap site-footer">
     <div class="footer-inner">
       <a id="link-repo" href="https://github.com/PDF-Diploma-Checker/app" data-i18n="repo">Kod źródłowy</a>
+      <a href="wymagania.html" data-i18n="req_footer">Wymagania formalne</a>
       <a id="link-issues" href="https://github.com/PDF-Diploma-Checker/app/issues" data-i18n="issues">Zgłoś problem</a>
     </div>
   </footer>

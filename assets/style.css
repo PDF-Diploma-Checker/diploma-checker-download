@@ -82,6 +82,10 @@ a:hover { color: var(--accent-btn); }
 .row + .row { border-top: 1px solid var(--border); }
 .name { font-size: 16px; font-weight: 600; }
 .desc { margin-top: 4px; max-width: 52ch; font-size: 14px; line-height: 1.55; color: var(--text-2); }
+.spec { margin-top: 10px; max-width: 64ch; font-size: 13px; line-height: 1.55; color: var(--text-2); }
+.spec span { display: block; }
+.spec span + span { margin-top: 4px; }
+.spec strong { font-weight: 600; color: var(--text-3); }
 .size { min-width: 76px; text-align: right; font-size: 14px; color: var(--text-2); font-variant-numeric: tabular-nums; }
 
 .btn {
@@ -122,6 +126,19 @@ code { padding: 2px 6px; font: 400 13.5px/1.4 ui-monospace, "SF Mono", "Cascadia
 .shot { margin-top: 64px; overflow: hidden; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); }
 .shot img { display: block; width: 100%; height: auto; }
 
+/* requirements page */
+.back { display: inline-block; margin-bottom: 20px; font-size: 14px; font-weight: 500; text-decoration: none; }
+.back:hover { text-decoration: underline; }
+.block { padding-top: 48px; }
+.block .list, .block .steps { margin-top: 16px; }
+.fields { margin: 16px 0 0; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); }
+.field { display: grid; grid-template-columns: 250px 1fr; gap: 6px 24px; padding: 14px 24px; }
+.field + .field { border-top: 1px solid var(--border); }
+.field dt { margin: 0; }
+.field dd { margin: 0; font-size: 14px; line-height: 1.55; color: var(--text-3); }
+.field code { font-size: 13px; overflow-wrap: anywhere; }
+.sample { display: block; margin-top: 2px; font-size: 13px; color: var(--text-2); }
+
 /* all versions */
 .versions { padding-top: 64px; }
 .versions .list { margin-top: 16px; }
@@ -156,6 +173,7 @@ code { padding: 2px 6px; font: 400 13.5px/1.4 ui-monospace, "SF Mono", "Cascadia
   .btn { grid-column: 2; }
   .versions .row { padding: 14px 16px; }
   .versions .row { grid-template-columns: 1fr; gap: 8px; }
+  .field { grid-template-columns: 1fr; padding: 14px 16px; }
   .install, .versions { padding-top: 48px; }
   .shot { margin-top: 48px; }
 }

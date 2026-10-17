@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Wymagania formalne | DiplomaChecker</title>
+  <meta name="description" content="Przykładowe pliki JSON z wymaganiami formalnymi pracy dyplomowej dla DiplomaChecker, według wytycznych Politechniki Gdańskiej.">
+  <meta name="color-scheme" content="light">
+  <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+  <link rel="preload" href="assets/fonts/inter-400.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/inter-600.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="assets/style.css">
+  <script src="assets/requirements.js" defer></script>
+</head>
+<body>
+  <header class="wrap site-header">
+    <a class="brand" href="./" aria-label="DiplomaChecker">
+      <img class="logo" src="assets/logo.svg" alt="" width="45" height="52">
+      <span class="brand-name">DiplomaChecker</span>
+    </a>
+    <div class="seg" id="lang" role="radiogroup" aria-label="Język / Language">
+      <label><input type="radio" name="lang" value="pl"><span>PL</span></label>
+      <label><input type="radio" name="lang" value="en"><span>EN</span></label>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="hero">
+      <a class="back" href="./" data-i18n="back">← Pobierz DiplomaChecker</a>
+      <h1 data-i18n="h1">Wymagania formalne</h1>
+      <p class="lead" data-i18n="lead"></p>
+    </section>
+
+    <p class="notice" data-i18n="disclaimer"></p>
+
+    <section class="block" aria-labelledby="files-title">
+      <h2 id="files-title" data-i18n="files_title">Pliki do pobrania</h2>
+      <ul class="list">
+        <li class="row">
+          <div class="info">
+            <p class="name" data-i18n="eng_name">Praca inżynierska</p>
+            <p class="desc" data-i18n="eng_desc"></p>
+          </div>
+          <span class="size">JSON</span>
+          <a class="btn btn-secondary" data-file="eng" href="assets/requirements/wymagania_inz.json" download="wymagania_inz.json" data-i18n="download">Pobierz</a>
+        </li>
+        <li class="row">
+          <div class="info">
+            <p class="name" data-i18n="msc_name">Praca magisterska</p>
+            <p class="desc" data-i18n="msc_desc"></p>
+          </div>
+          <span class="size">JSON</span>
+          <a class="btn btn-secondary" data-file="msc" href="assets/requirements/wymagania_mag.json" download="wymagania_mag.json" data-i18n="download">Pobierz</a>
+        </li>
+      </ul>
+    </section>
+
+    <section class="block" aria-labelledby="use-title">
+      <h2 id="use-title" data-i18n="use_title">Jak użyć pliku</h2>
+      <ol class="steps">
+        <li data-i18n-html="use_1"></li>
+        <li data-i18n-html="use_2"></li>
+        <li data-i18n-html="use_3"></li>
+      </ol>
+    </section>
+
+    <section class="block" aria-labelledby="fields-title">
+      <h2 id="fields-title" data-i18n="fields_title">Opis pól</h2>
+      <p class="note" data-i18n="fields_note"></p>
+      <dl class="fields" id="fields"></dl>
+    </section>
+  </main>
+
+  <footer class="wrap site-footer">
+    <div class="footer-inner">
+      <a href="./" data-i18n="back_footer">Pobierz aplikację</a>
+      <a href="https://github.com/PDF-Diploma-Checker/app" data-i18n="repo">Kod źródłowy</a>
+      <a href="https://github.com/PDF-Diploma-Checker/app/issues" data-i18n="issues">Zgłoś problem</a>
+    </div>
+  </footer>
+</body>
+</html>

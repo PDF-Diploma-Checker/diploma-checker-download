@@ -36,14 +36,9 @@ const TEXT = {
     lin_1: "Otwórz terminal w folderze z pobranym archiwum i rozpakuj je: <code>tar -xzf DiplomaChecker-linux-*.tar.gz</code>",
     lin_2: "Wejdź do rozpakowanego folderu: <code>cd DiplomaChecker</code>",
     lin_3: "Uruchom aplikację: <code>./DiplomaChecker</code>",
-    req_title: "Przykładowe wymagania formalne",
-    req_note: "Pliki JSON z parametrami formatowania pracy dyplomowej, przygotowane przykładowo według wytycznych Politechniki Gdańskiej. To tylko przykład: wymagania różnią się między uczelniami, wydziałami i promotorami, więc sprawdź obowiązujące zasady i w razie potrzeby zmień wartości.",
-    req_eng: "Praca inżynierska",
-    req_msc: "Praca magisterska",
-    req_download: "Pobierz JSON",
-    req_summary: (d) => `${d.pages}, czcionka ${d.font} pt, interlinia ${d.spacing}`,
-    req_pages: (min, max) => `${min}–${max} stron`,
     models_note: "W trybie dokładnym aplikacja zapyta o zgodę na pobranie modeli AI (Gemma i LLaVA). Potrzebne jest wtedy połączenie z internetem.",
+    req_hint: "Do dokumentu możesz dołączyć plik wymagań formalnych (JSON). Przykładowe pliki i opis pól: <a href=\"wymagania.html\">wymagania formalne</a>.",
+    req_footer: "Wymagania formalne",
     shot_alt: "Okno startowe DiplomaChecker z listą dokumentów",
     all_title: "Wszystkie wersje",
     repo: "Kod źródłowy",
@@ -91,14 +86,9 @@ const TEXT = {
     lin_1: "Open a terminal in the folder with the downloaded archive and unpack it: <code>tar -xzf DiplomaChecker-linux-*.tar.gz</code>",
     lin_2: "Enter the unpacked folder: <code>cd DiplomaChecker</code>",
     lin_3: "Start the app: <code>./DiplomaChecker</code>",
-    req_title: "Example formatting requirements",
-    req_note: "JSON files with thesis formatting parameters, prepared as an example according to the Gdańsk University of Technology guidelines. This is only an example: requirements differ between universities, faculties and supervisors, so check the rules that apply to you and change the values if needed.",
-    req_eng: "Engineer's thesis",
-    req_msc: "Master's thesis",
-    req_download: "Download JSON",
-    req_summary: (d) => `${d.pages}, font ${d.font} pt, line spacing ${d.spacing}`,
-    req_pages: (min, max) => `${min}–${max} pages`,
     models_note: "In detailed mode the app asks for your permission to download the AI models (Gemma and LLaVA). An internet connection is needed for that.",
+    req_hint: "You can attach a file with formatting requirements (JSON) to a document. Example files and a description of the fields: <a href=\"wymagania.html\">formatting requirements</a>.",
+    req_footer: "Formatting requirements",
     shot_alt: "The DiplomaChecker start window with a list of documents",
     all_title: "All versions",
     repo: "Source code",
@@ -135,7 +125,6 @@ const state = {
   tag: null,          // selected release tag
   releases: [],       // newest first
   extended: { latest: {}, versions: {} },
-  reqs: {},           // example requirement files, by path
   loaded: false,
   failed: false,
 };
@@ -212,36 +201,6 @@ async function loadExtended() {
     const data = await res.json();
     state.extended = { latest: data.latest || {}, versions: data.versions || {} };
   } catch (e) { /* optional file */ }
-}
-
-/* Example requirement files: only a one-line summary is read from them, the download works without it. */
-async function loadRequirements() {
-  for (const el of $$("[data-req-summary]")) {
-    const path = el.dataset.reqSummary;
-    try {
-      const res = await fetch(path, { cache: "no-cache" });
-      if (!res.ok) continue;
-      state.reqs[path] = await res.json();
-    } catch (e) { /* summary stays empty */ }
-  }
-  renderRequirements();
-}
-
-function renderRequirements() {
-  for (const el of $$("[data-req-summary]")) {
-    const data = state.reqs[el.dataset.reqSummary];
-    if (!data) { el.textContent = ""; continue; }
-    const text = TEXT[state.lang];
-    const spacing = String(data.interlinia || "").replace(".", state.lang === "pl" ? "," : ".");
-    el.textContent = text.req_summary({
-      pages: text.req_pages(data.minimalna_liczba_stron, data.maksymalna_liczba_stron),
-      font: data.rozmiar_czcionki,
-      spacing,
-    });
-  }
-  for (const link of $$("[data-req-link]")) {
-    link.setAttribute("aria-label", `${tr("req_download")}: ${tr(link.dataset.reqLink)}`);
-  }
 }
 
 const latestTag = () => {
@@ -442,7 +401,6 @@ function render() {
   renderNotice();
   renderMeta();
   renderAllVersions();
-  renderRequirements();
 }
 
 function applyLang() {
@@ -487,7 +445,6 @@ function init() {
   $("#version").addEventListener("change", (event) => selectVersion(event.target.value));
 
   applyLang();
-  loadRequirements();
 
   Promise.all([
     loadReleases().catch(() => { state.failed = true; return []; }),
