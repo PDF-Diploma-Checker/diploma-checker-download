@@ -2,7 +2,7 @@
 
 /* ---------------------------------------------------------------- settings
    Releases are read from this repository (public GitHub API). Change the line if they live elsewhere. */
-const REPO = "PDF-Diploma-Checker/app";
+const REPO = "PDF-Diploma-Checker/diploma-checker-download";
 /* Repository linked in the footer (source code, issues). Same as REPO unless releases live in a separate repo. */
 const SOURCE_REPO = "PDF-Diploma-Checker/app";
 const CACHE_MINUTES = 10;
