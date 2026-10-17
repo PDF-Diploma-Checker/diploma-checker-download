@@ -22,7 +22,7 @@ const TEXT = {
     version: "Wersja",
     base_name: "Podstawowa",
     base_desc: "Tryb szybki: analiza formalna i językowa oparta na regułach, bez modeli AI.",
-    base_spec: "<span><strong>Zawiera:</strong> spaCy (pl_core_news_lg, en_core_web_lg), Morfeusz 2, Lingua (wykrywanie języka), sprawdzanie pisowni i LanguageTool.</span><span><strong>Wymaga:</strong> procesora x86-64 oraz środowiska Java (JRE) w systemie, potrzebnego dla LanguageTool. Karta graficzna nie jest używana.</span>",
+    base_spec: "<span><strong>Zawiera:</strong> spaCy (pl_core_news_lg, en_core_web_lg), Morfeusz 2, Lingua (wykrywanie języka), sprawdzanie pisowni i LanguageTool.</span><span><strong>Wymaga:</strong> środowiska Java (JRE) w systemie, potrzebnego dla LanguageTool. Karta graficzna nie jest używana.</span>",
     cpu_name: "CPU",
     cpu_desc: "Zawartość wersji podstawowej oraz tryb dokładny (modele AI) liczony na procesorze.",
     cpu_spec: "<span><strong>Dodaje:</strong> llama-cpp-python z modelami Gemma 3 12B i LLaVA 1.6 Mistral 7B (kwantyzacja Q4_K_M) oraz sentence-transformers z PyTorch w wersji CPU.</span><span><strong>Wymaga:</strong> tego samego co wersja podstawowa oraz ok. 9 GB wolnego miejsca na modele, pobierane przy pierwszym użyciu trybu dokładnego. Analiza na procesorze trwa bardzo długo.</span>",
