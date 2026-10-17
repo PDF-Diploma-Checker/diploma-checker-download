@@ -21,17 +21,28 @@ const TEXT = {
     os_label: "System operacyjny",
     version: "Wersja",
     base_name: "Podstawowa",
-    base_desc: "Szybka analiza reguł, bez modeli AI. Najmniejszy rozmiar, działa na każdym komputerze.",
+    base_desc: "Tryb szybki: analiza formalna i językowa oparta na regułach, bez modeli AI.",
+    base_spec: "<span><strong>Zawiera:</strong> spaCy (pl_core_news_lg, en_core_web_lg), Morfeusz 2, Lingua (wykrywanie języka), sprawdzanie pisowni i LanguageTool.</span><span><strong>Wymaga:</strong> procesora x86-64 oraz środowiska Java (JRE) w systemie, potrzebnego dla LanguageTool. Karta graficzna nie jest używana.</span>",
     cpu_name: "CPU",
-    cpu_desc: "Dodaje tryb dokładny z modelami AI, liczony na procesorze. Wolniejszy, ale nie wymaga karty graficznej.",
-    gpu_name: "Rozszerzona (GPU)",
-    gpu_desc: "Tryb dokładny na karcie NVIDIA z aktualnym sterownikiem. Zalecane minimum to 8 GB VRAM.",
+    cpu_desc: "Zawartość wersji podstawowej oraz tryb dokładny (modele AI) liczony na procesorze.",
+    cpu_spec: "<span><strong>Dodaje:</strong> llama-cpp-python z modelami Gemma 3 12B i LLaVA 1.6 Mistral 7B (kwantyzacja Q4_K_M) oraz sentence-transformers z PyTorch w wersji CPU.</span><span><strong>Wymaga:</strong> tego samego co wersja podstawowa oraz ok. 9 GB wolnego miejsca na modele, pobierane przy pierwszym użyciu trybu dokładnego. Analiza na procesorze trwa bardzo długo.</span>",
+    gpu_name: "Rozszerzona (GPU, CUDA)",
+    gpu_desc: "Zawartość wersji CPU, a tryb dokładny jest przyspieszany na karcie graficznej przez CUDA.",
+    gpu_spec: "<span><strong>Zmienia:</strong> PyTorch z CUDA 12.8 oraz llama-cpp-python skompilowany z obsługą CUDA (warstwy modelu są przenoszone na GPU).</span><span><strong>Wymaga:</strong> karty graficznej NVIDIA z obsługą CUDA, sterownika zgodnego z CUDA 12.8 (od wersji 570) oraz zalecanych min. 8 GB VRAM. Pozostałe wymagania jak w wersji CPU. Karty AMD i Intel nie są obsługiwane.</span>",
     install_title: "Instalacja",
     win_1: "Rozpakuj pobrane archiwum <strong>.zip</strong> do dowolnego folderu.",
     win_2: "Uruchom <strong>DiplomaChecker.exe</strong> z rozpakowanego folderu.",
     win_3: "Jeśli Windows pokaże ekran „Windows ochronił Twój komputer”, wybierz <strong>Więcej informacji</strong>, a potem <strong>Uruchom mimo to</strong>. Aplikacja nie jest jeszcze podpisana certyfikatem wydawcy.",
-    lin_1: "Rozpakuj archiwum: <code>tar -xzf DiplomaChecker-linux-*.tar.gz</code>",
-    lin_2: "Uruchom aplikację: <code>./DiplomaChecker/DiplomaChecker</code>",
+    lin_1: "Otwórz terminal w folderze z pobranym archiwum i rozpakuj je: <code>tar -xzf DiplomaChecker-linux-*.tar.gz</code>",
+    lin_2: "Wejdź do rozpakowanego folderu: <code>cd DiplomaChecker</code>",
+    lin_3: "Uruchom aplikację: <code>./DiplomaChecker</code>",
+    req_title: "Przykładowe wymagania formalne",
+    req_note: "Pliki JSON z parametrami formatowania pracy dyplomowej, przygotowane przykładowo według wytycznych Politechniki Gdańskiej. To tylko przykład: wymagania różnią się między uczelniami, wydziałami i promotorami, więc sprawdź obowiązujące zasady i w razie potrzeby zmień wartości.",
+    req_eng: "Praca inżynierska",
+    req_msc: "Praca magisterska",
+    req_download: "Pobierz JSON",
+    req_summary: (d) => `${d.pages}, czcionka ${d.font} pt, interlinia ${d.spacing}`,
+    req_pages: (min, max) => `${min}–${max} stron`,
     models_note: "W trybie dokładnym aplikacja zapyta o zgodę na pobranie modeli AI (Gemma i LLaVA). Potrzebne jest wtedy połączenie z internetem.",
     shot_alt: "Okno startowe DiplomaChecker z listą dokumentów",
     all_title: "Wszystkie wersje",
@@ -65,17 +76,28 @@ const TEXT = {
     os_label: "Operating system",
     version: "Version",
     base_name: "Basic",
-    base_desc: "Fast rule-based analysis, no AI models. The smallest download, runs on any computer.",
+    base_desc: "Fast mode: rule-based formatting and language analysis, no AI models.",
+    base_spec: "<span><strong>Includes:</strong> spaCy (pl_core_news_lg, en_core_web_lg), Morfeusz 2, Lingua (language detection), spell checking and LanguageTool.</span><span><strong>Requires:</strong> an x86-64 processor and a Java runtime (JRE) installed on the system, which LanguageTool needs. The graphics card is not used.</span>",
     cpu_name: "CPU",
-    cpu_desc: "Adds detailed mode with AI models, running on the processor. Slower, but needs no graphics card.",
-    gpu_name: "Extended (GPU)",
-    gpu_desc: "Detailed mode on an NVIDIA card with a current driver. 8 GB of VRAM is the recommended minimum.",
+    cpu_desc: "Everything in the basic build, plus detailed mode (AI models) running on the processor.",
+    cpu_spec: "<span><strong>Adds:</strong> llama-cpp-python with the Gemma 3 12B and LLaVA 1.6 Mistral 7B models (Q4_K_M quantization) and sentence-transformers with the CPU build of PyTorch.</span><span><strong>Requires:</strong> the same as the basic build, plus about 9 GB of free disk space for the models, downloaded the first time detailed mode is used. Analysis on the processor takes a very long time.</span>",
+    gpu_name: "Extended (GPU, CUDA)",
+    gpu_desc: "Everything in the CPU build, with detailed mode accelerated on the graphics card through CUDA.",
+    gpu_spec: "<span><strong>Changes:</strong> PyTorch with CUDA 12.8 and llama-cpp-python compiled with CUDA support (model layers are offloaded to the GPU).</span><span><strong>Requires:</strong> an NVIDIA graphics card with CUDA support, a driver compatible with CUDA 12.8 (version 570 or newer) and, as recommended, at least 8 GB of VRAM. Other requirements as in the CPU build. AMD and Intel graphics cards are not supported.</span>",
     install_title: "Installation",
     win_1: "Unpack the downloaded <strong>.zip</strong> archive to any folder.",
     win_2: "Run <strong>DiplomaChecker.exe</strong> from the unpacked folder.",
     win_3: "If Windows shows “Windows protected your PC”, choose <strong>More info</strong>, then <strong>Run anyway</strong>. The app is not signed with a publisher certificate yet.",
-    lin_1: "Unpack the archive: <code>tar -xzf DiplomaChecker-linux-*.tar.gz</code>",
-    lin_2: "Start the app: <code>./DiplomaChecker/DiplomaChecker</code>",
+    lin_1: "Open a terminal in the folder with the downloaded archive and unpack it: <code>tar -xzf DiplomaChecker-linux-*.tar.gz</code>",
+    lin_2: "Enter the unpacked folder: <code>cd DiplomaChecker</code>",
+    lin_3: "Start the app: <code>./DiplomaChecker</code>",
+    req_title: "Example formatting requirements",
+    req_note: "JSON files with thesis formatting parameters, prepared as an example according to the Gdańsk University of Technology guidelines. This is only an example: requirements differ between universities, faculties and supervisors, so check the rules that apply to you and change the values if needed.",
+    req_eng: "Engineer's thesis",
+    req_msc: "Master's thesis",
+    req_download: "Download JSON",
+    req_summary: (d) => `${d.pages}, font ${d.font} pt, line spacing ${d.spacing}`,
+    req_pages: (min, max) => `${min}–${max} pages`,
     models_note: "In detailed mode the app asks for your permission to download the AI models (Gemma and LLaVA). An internet connection is needed for that.",
     shot_alt: "The DiplomaChecker start window with a list of documents",
     all_title: "All versions",
@@ -113,6 +135,7 @@ const state = {
   tag: null,          // selected release tag
   releases: [],       // newest first
   extended: { latest: {}, versions: {} },
+  reqs: {},           // example requirement files, by path
   loaded: false,
   failed: false,
 };
@@ -189,6 +212,36 @@ async function loadExtended() {
     const data = await res.json();
     state.extended = { latest: data.latest || {}, versions: data.versions || {} };
   } catch (e) { /* optional file */ }
+}
+
+/* Example requirement files: only a one-line summary is read from them, the download works without it. */
+async function loadRequirements() {
+  for (const el of $$("[data-req-summary]")) {
+    const path = el.dataset.reqSummary;
+    try {
+      const res = await fetch(path, { cache: "no-cache" });
+      if (!res.ok) continue;
+      state.reqs[path] = await res.json();
+    } catch (e) { /* summary stays empty */ }
+  }
+  renderRequirements();
+}
+
+function renderRequirements() {
+  for (const el of $$("[data-req-summary]")) {
+    const data = state.reqs[el.dataset.reqSummary];
+    if (!data) { el.textContent = ""; continue; }
+    const text = TEXT[state.lang];
+    const spacing = String(data.interlinia || "").replace(".", state.lang === "pl" ? "," : ".");
+    el.textContent = text.req_summary({
+      pages: text.req_pages(data.minimalna_liczba_stron, data.maksymalna_liczba_stron),
+      font: data.rozmiar_czcionki,
+      spacing,
+    });
+  }
+  for (const link of $$("[data-req-link]")) {
+    link.setAttribute("aria-label", `${tr("req_download")}: ${tr(link.dataset.reqLink)}`);
+  }
 }
 
 const latestTag = () => {
@@ -389,6 +442,7 @@ function render() {
   renderNotice();
   renderMeta();
   renderAllVersions();
+  renderRequirements();
 }
 
 function applyLang() {
@@ -433,6 +487,7 @@ function init() {
   $("#version").addEventListener("change", (event) => selectVersion(event.target.value));
 
   applyLang();
+  loadRequirements();
 
   Promise.all([
     loadReleases().catch(() => { state.failed = true; return []; }),
