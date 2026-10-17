@@ -2,7 +2,7 @@
   "_help": "Links to the Extended (GPU) builds that are too big for GitHub Releases. 'latest' is used for the newest release; add an entry under 'versions' (key = release tag) for older ones. Leave 'url' empty while a file is not uploaded yet.",
   "latest": {
     "windows": { "url": "", "size": "" },
-    "linux":   { "url": "", "size": "" }
+    "linux":   { "url": "https://drive.google.com/file/d/1nOatoeHpUZgc4VFXlFd1De2nose8ymUG/view?usp=sharing", "size": "6.2 GB" }
   },
   "versions": {}
 }
