@@ -72,7 +72,7 @@ const TEXT = {
     version: "Version",
     base_name: "Basic",
     base_desc: "Fast mode: rule-based formatting and language analysis, no AI models.",
-    base_spec: "<span><strong>Includes:</strong> spaCy (pl_core_news_lg, en_core_web_lg), Morfeusz 2, Lingua (language detection), spell checking and LanguageTool.</span><span><strong>Requires:</strong> an x86-64 processor and a Java runtime (JRE) installed on the system, which LanguageTool needs. The graphics card is not used.</span>",
+    base_spec: "<span><strong>Includes:</strong> spaCy (pl_core_news_lg, en_core_web_lg), Morfeusz 2, Lingua (language detection), spell checking and LanguageTool.</span><span><strong>Requires:</strong> Java runtime (JRE) installed on the system, which LanguageTool needs. The graphics card is not used.</span>",
     cpu_name: "CPU",
     cpu_desc: "Everything in the basic build, plus detailed mode (AI models) running on the processor.",
     cpu_spec: "<span><strong>Adds:</strong> llama-cpp-python with the Gemma 3 12B and LLaVA 1.6 Mistral 7B models (Q4_K_M quantization) and sentence-transformers with the CPU build of PyTorch.</span><span><strong>Requires:</strong> the same as the basic build, plus about 9 GB of free disk space for the models, downloaded the first time detailed mode is used. Analysis on the processor takes a very long time.</span>",
