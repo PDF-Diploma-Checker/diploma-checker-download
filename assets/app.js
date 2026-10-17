@@ -2,7 +2,9 @@
 
 /* ---------------------------------------------------------------- settings
    Releases are read from this repository (public GitHub API). Change the line if they live elsewhere. */
-const REPO = "PDF-Diploma-Checker/download-diploma-checker";
+const REPO = "PDF-Diploma-Checker/app";
+/* Repository linked in the footer (source code, issues). Same as REPO unless releases live in a separate repo. */
+const SOURCE_REPO = "PDF-Diploma-Checker/app";
 const CACHE_MINUTES = 10;
 
 /* Release assets must be named  DiplomaChecker-<windows|linux>-<base|cpu|gpu>.<zip|tar.gz>
@@ -415,8 +417,8 @@ function init() {
   state.lang = detectLang();
   state.os = detectOS();
 
-  $("#link-repo").href = `https://github.com/${REPO}`;
-  $("#link-issues").href = `https://github.com/${REPO}/issues`;
+  $("#link-repo").href = `https://github.com/${SOURCE_REPO}`;
+  $("#link-issues").href = `https://github.com/${SOURCE_REPO}/issues`;
 
   $("#lang").addEventListener("change", (event) => {
     state.lang = event.target.value;
