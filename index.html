@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Pobierz DiplomaChecker</title>
+  <meta name="description" content="Pobierz DiplomaChecker, aplikację desktopową do sprawdzania prac dyplomowych w formacie PDF. Windows i Linux.">
+  <meta name="color-scheme" content="light">
+  <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+  <link rel="preload" href="assets/fonts/inter-400.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/inter-600.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="assets/style.css">
+  <script src="assets/app.js" defer></script>
+</head>
+<body>
+  <header class="wrap site-header">
+    <a class="brand" href="./" aria-label="DiplomaChecker">
+      <img class="logo" src="assets/favicon.svg" alt="" width="45" height="52">
+      <span class="brand-name">DiplomaChecker</span>
+    </a>
+    <div class="seg" id="lang" role="radiogroup" aria-label="Język / Language">
+      <label><input type="radio" name="lang" value="pl"><span>PL</span></label>
+      <label><input type="radio" name="lang" value="en"><span>EN</span></label>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="hero">
+      <h1 data-i18n="h1">Pobierz DiplomaChecker</h1>
+      <p class="lead" data-i18n="lead">Aplikacja desktopowa do sprawdzania prac dyplomowych w formacie PDF. Wybierz system i wersję.</p>
+    </section>
+
+    <section class="chooser" aria-label="Pobieranie">
+      <div class="bar">
+        <div class="seg" id="os" role="radiogroup" data-i18n-aria="os_label" aria-label="System operacyjny">
+          <label><input type="radio" name="os" value="windows"><span>Windows</span></label>
+          <label><input type="radio" name="os" value="linux"><span>Linux</span></label>
+        </div>
+        <label class="version">
+          <span data-i18n="version">Wersja</span>
+          <select id="version" disabled></select>
+        </label>
+      </div>
+
+      <p class="notice" id="notice" role="status" hidden></p>
+
+      <ul class="list" id="variants">
+        <li class="row" data-variant="base">
+          <div class="info">
+            <p class="name" data-i18n="base_name">Podstawowa</p>
+            <p class="desc" data-i18n="base_desc"></p>
+          </div>
+          <span class="size" data-size></span>
+          <a class="btn btn-primary" data-action></a>
+        </li>
+        <li class="row" data-variant="cpu">
+          <div class="info">
+            <p class="name" data-i18n="cpu_name">CPU</p>
+            <p class="desc" data-i18n="cpu_desc"></p>
+          </div>
+          <span class="size" data-size></span>
+          <a class="btn btn-secondary" data-action></a>
+        </li>
+        <li class="row" data-variant="gpu">
+          <div class="info">
+            <p class="name" data-i18n="gpu_name">Rozszerzona (GPU)</p>
+            <p class="desc" data-i18n="gpu_desc"></p>
+          </div>
+          <span class="size" data-size></span>
+          <a class="btn btn-secondary" data-action></a>
+        </li>
+      </ul>
+
+      <p class="meta" id="release-meta"></p>
+    </section>
+
+    <noscript><p class="notice">Do wyświetlenia aktualnej listy wersji potrzebny jest JavaScript. Wszystkie wydania są na stronie <a href="https://github.com/PDF-Diploma-Checker/app/releases">GitHub Releases</a>.</p></noscript>
+
+    <section class="install" aria-labelledby="install-title">
+      <h2 id="install-title" data-i18n="install_title">Instalacja</h2>
+      <ol class="steps" data-os-steps="windows">
+        <li data-i18n-html="win_1"></li>
+        <li data-i18n-html="win_2"></li>
+        <li data-i18n-html="win_3"></li>
+      </ol>
+      <ol class="steps" data-os-steps="linux" hidden>
+        <li data-i18n-html="lin_1"></li>
+        <li data-i18n-html="lin_2"></li>
+      </ol>
+      <p class="note" data-i18n="models_note"></p>
+    </section>
+
+    <figure class="shot">
+      <img id="shot" src="assets/img/app-pl.webp" width="1440" height="860" alt="" loading="lazy">
+    </figure>
+
+    <section class="versions" aria-labelledby="versions-title">
+      <h2 id="versions-title" data-i18n="all_title">Wszystkie wersje</h2>
+      <ul class="list" id="all-versions"></ul>
+    </section>
+  </main>
+
+  <footer class="wrap site-footer">
+    <div class="footer-inner">
+      <a id="link-repo" href="https://github.com/PDF-Diploma-Checker/app" data-i18n="repo">Kod źródłowy</a>
+      <a id="link-issues" href="https://github.com/PDF-Diploma-Checker/app/issues" data-i18n="issues">Zgłoś problem</a>
+    </div>
+  </footer>
+</body>
+</html>
