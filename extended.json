@@ -1,8 +1,26 @@
 {
-  "_help": "Links to the Extended (GPU) builds that are too big for GitHub Releases. 'latest' is used for the newest release; add an entry under 'versions' (key = release tag) for older ones. Leave 'url' empty while a file is not uploaded yet.",
-  "latest": {
-    "windows": { "url": "https://drive.google.com/file/d/1GcJaAuDYeiQXosvPzhcLfed7kJQsbVdY/view?usp=sharing", "size": "3.9 GB" },
-    "linux":   { "url": "https://drive.google.com/file/d/1o_4cnQIM6_J3AAJmt_QTQtvzxO4C7Vt3/view?usp=sharing", "size": "6.1 GB" }
-  },
-  "versions": {}
+  "_help": "Links to Extended (GPU) builds hosted outside GitHub Releases (before v0.3.1 the GPU builds were on Google Drive). Since v0.3.1 big files are uploaded to the release in parts (.001, .002, ...) and the page lists them by itself, so new versions need no entry here. 'latest' is used for the newest release; entries under 'versions' (key = release tag) for older ones. Leave 'url' empty while a file is not uploaded yet.",
+  "latest": {},
+  "versions": {
+    "v0.3.0": {
+      "windows": {
+        "url": "https://drive.google.com/file/d/1GcJaAuDYeiQXosvPzhcLfed7kJQsbVdY/view?usp=sharing",
+        "size": "3.9 GB"
+      },
+      "linux": {
+        "url": "https://drive.google.com/file/d/1o_4cnQIM6_J3AAJmt_QTQtvzxO4C7Vt3/view?usp=sharing",
+        "size": "6.1 GB"
+      }
+    },
+    "v0.2.0": {
+      "windows": {
+        "url": "https://drive.google.com/file/d/1ur4K2vskh3f6MvGcRunrLmDSkVFmXv6a/view?usp=sharing",
+        "size": "3.9 GB"
+      },
+      "linux": {
+        "url": "https://drive.google.com/file/d/1Kvsk3nIPsfs0EY-zBltaGSXgF9P9gxHn/view?usp=sharing",
+        "size": "6.1 GB"
+      }
+    }
+  }
 }

@@ -8,7 +8,9 @@ const SOURCE_REPO = "PDF-Diploma-Checker/app";
 const CACHE_MINUTES = 10;
 
 /* Release assets must be named  DiplomaChecker-<windows|linux>-<base|cpu|gpu>.<zip|tar.gz>
-   Builds that are too big for GitHub (Extended / GPU) are linked from extended.json. */
+   A file above GitHub's 2 GB limit is uploaded in parts: <archive>.001, .002, ... (tools/prepare_release_assets.py in
+   the app repository); the page then lists the parts and shows how to join them.
+   Older Extended (GPU) builds that were hosted elsewhere are linked from extended.json. */
 const VARIANTS = ["base", "cpu", "gpu"];
 
 /* ------------------------------------------------------------------- texts */
@@ -56,6 +58,13 @@ const TEXT = {
     pre_suffix: " (testowa)",
     sha: "Kopiuj sumę SHA-256",
     sha_done: "Skopiowano",
+    download_parts: (n) => `Pobierz (${n} części)`,
+    parts_intro: (n) => `Plik jest większy niż limit GitHuba (2 GB), dlatego jest podzielony na ${n} części. Pobierz wszystkie do jednego folderu i połącz je:`,
+    part: (i, n) => `Część ${i} z ${n}`,
+    parts_join_windows: "W wierszu poleceń (cmd) w folderze z częściami:",
+    parts_join_linux: "W terminalu w folderze z częściami:",
+    parts_7zip: "Albo otwórz plik .001 w 7-Zip, który sam połączy części.",
+    parts_sha: "Suma SHA-256 całego archiwum",
     err_load: "Nie udało się pobrać listy wersji. Wszystkie wydania znajdziesz na stronie GitHub.",
     err_empty: "Nie opublikowano jeszcze żadnej wersji.",
     mac_note: "Wersje dla macOS nie są jeszcze dostępne.",
@@ -106,6 +115,13 @@ const TEXT = {
     pre_suffix: " (pre-release)",
     sha: "Copy SHA-256 checksum",
     sha_done: "Copied",
+    download_parts: (n) => `Download (${n} parts)`,
+    parts_intro: (n) => `The file is bigger than GitHub's limit (2 GB), so it is split into ${n} parts. Download all of them into one folder and join them:`,
+    part: (i, n) => `Part ${i} of ${n}`,
+    parts_join_windows: "In the command prompt (cmd), in the folder with the parts:",
+    parts_join_linux: "In a terminal, in the folder with the parts:",
+    parts_7zip: "Or open the .001 file in 7-Zip, which joins the parts itself.",
+    parts_sha: "SHA-256 checksum of the whole archive",
     err_load: "Could not load the list of versions. You can find every release on GitHub.",
     err_empty: "No version has been published yet.",
     mac_note: "Versions for macOS are not available yet.",
@@ -217,6 +233,23 @@ function resolve(variant) {
   const asset = release.assets.find((a) => pattern.test(a.name));
   if (asset) return { url: asset.url, size: formatSize(asset.size), digest: asset.digest };
 
+  // an archive above 2 GB: <archive>.001, .002, ... plus <archive>.sha256 with the checksum of the joined file
+  const partPattern = new RegExp(`^(DiplomaChecker-${state.os}-${variant}\\.(?:zip|tar\\.gz))\\.(\\d{3})$`, "i");
+  const parts = release.assets
+    .map((a) => ({ asset: a, match: partPattern.exec(a.name) }))
+    .filter((p) => p.match)
+    .sort((a, b) => Number(a.match[2]) - Number(b.match[2]));
+  if (parts.length) {
+    const archive = parts[0].match[1];
+    const sidecar = release.assets.find((a) => a.name === archive + ".sha256");
+    return {
+      parts: parts.map((p) => ({ name: p.asset.name, url: p.asset.url, size: formatSize(p.asset.size) })),
+      archive,
+      size: formatSize(parts.reduce((sum, p) => sum + (p.asset.size || 0), 0)),
+      shaUrl: sidecar ? sidecar.url : "",
+    };
+  }
+
   if (variant === "gpu") {
     const known = state.extended.versions[release.tag] || (release.tag === latestTag() ? state.extended.latest : null);
     const entry = known && known[state.os];
@@ -251,6 +284,8 @@ function renderRows() {
     const full = (action) => TEXT[state.lang].action_label(action, name, OS_NAMES[state.os]);
     let shaButton = $(".sha", row);
     if (shaButton) shaButton.remove();
+    const oldParts = $(".parts", row);
+    if (oldParts) oldParts.remove();
 
     if (state.failed) {
       size.textContent = "";
@@ -264,7 +299,16 @@ function renderRows() {
     }
 
     const found = resolve(variant);
-    if (found.url) {
+    if (found.parts) {
+      size.textContent = found.size;
+      const id = `parts-${variant}`;
+      setAction(link, {
+        href: "#" + id, label: tr("download_parts")(found.parts.length),
+        ariaLabel: full(tr("download_parts")(found.parts.length)),
+      });
+      link.removeAttribute("rel");
+      $(".info", row).appendChild(renderParts(found, id));
+    } else if (found.url) {
       size.textContent = found.size;
       setAction(link, { href: found.url, label: tr("download"), ariaLabel: full(tr("download")) });
       if (found.digest.startsWith("sha256:")) {
@@ -287,6 +331,56 @@ function renderRows() {
       setAction(link, { label, ariaLabel: full(label) });
     }
   }
+}
+
+/* The links to the parts of a split archive and the command that joins them. */
+function renderParts(found, id) {
+  const n = found.parts.length;
+  const box = document.createElement("div");
+  box.className = "parts";
+  box.id = id;
+
+  const intro = document.createElement("p");
+  intro.textContent = tr("parts_intro")(n);
+  const list = document.createElement("ul");
+  found.parts.forEach((part, i) => {
+    const item = document.createElement("li");
+    const a = document.createElement("a");
+    a.href = part.url;
+    a.rel = "noopener";
+    a.textContent = tr("part")(i + 1, n);
+    a.title = part.name;
+    const meta = document.createElement("span");
+    meta.textContent = part.size;
+    item.append(a, meta);
+    list.appendChild(item);
+  });
+
+  const how = document.createElement("p");
+  const command = document.createElement("code");
+  if (state.os === "windows") {
+    how.textContent = tr("parts_join_windows");
+    command.textContent = `copy /b ${found.parts.map((p) => p.name).join("+")} ${found.archive}`;
+  } else {
+    how.textContent = tr("parts_join_linux");
+    command.textContent = `cat ${found.archive}.0* > ${found.archive} && tar -xzf ${found.archive}`;
+  }
+  box.append(intro, list, how, command);
+
+  if (state.os === "windows") {
+    const zip = document.createElement("p");
+    zip.textContent = tr("parts_7zip");
+    box.appendChild(zip);
+  }
+  if (found.shaUrl) {
+    const sha = document.createElement("a");
+    sha.className = "parts-sha";
+    sha.href = found.shaUrl;
+    sha.rel = "noopener";
+    sha.textContent = tr("parts_sha");
+    box.appendChild(sha);
+  }
+  return box;
 }
 
 function renderNotice() {
