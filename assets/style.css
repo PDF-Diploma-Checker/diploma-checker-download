@@ -61,6 +61,7 @@ a:hover { color: var(--accent-btn); }
 .hero { padding-top: 48px; padding-bottom: 32px; }
 .hero h1 { font-size: 36px; line-height: 1.2; font-weight: 600; letter-spacing: -0.015em; }
 .lead { margin-top: 12px; max-width: 54ch; font-size: 17px; color: var(--text-2); }
+.hero-license { margin-top: 8px; font-size: 14px; color: var(--text-2); }
 
 /* chooser */
 .bar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 16px; }
