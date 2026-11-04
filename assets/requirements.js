@@ -41,6 +41,7 @@ const TEXT = {
     example: "Przykład",
     repo: "Kod źródłowy",
     issues: "Zgłoś problem",
+    license: "Licencja (AGPL-3.0)",
   },
   en: {
     title: "Formatting requirements | DiplomaChecker",
@@ -79,6 +80,7 @@ const TEXT = {
     example: "Example",
     repo: "Source code",
     issues: "Report a problem",
+    license: "License (AGPL-3.0)",
   },
 };
 

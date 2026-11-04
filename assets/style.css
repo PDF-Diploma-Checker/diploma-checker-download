@@ -164,8 +164,9 @@ code { padding: 2px 6px; font: 400 13.5px/1.4 ui-monospace, "SF Mono", "Cascadia
 
 /* footer */
 .site-footer { margin-top: 64px; padding-bottom: 40px; font-size: 14px; }
-.footer-inner { display: flex; gap: 24px; padding-top: 24px; border-top: 1px solid var(--border); }
+.footer-inner { display: flex; flex-wrap: wrap; gap: 8px 24px; padding-top: 24px; border-top: 1px solid var(--border); }
 .site-footer a { color: var(--text-3); }
+.footer-legal { margin: 12px 0 0; color: var(--text-3); font-size: 13px; }
 .site-footer a:hover { color: var(--text); }
 
 /* narrow screens */
