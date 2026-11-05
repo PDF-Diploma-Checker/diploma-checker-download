@@ -231,6 +231,21 @@ const currentRelease = () => state.releases.find((r) => r.tag === state.tag) || 
 function resolve(variant) {
   const release = currentRelease();
   if (!release) return { missing: true };
+  const found = resolveIn(release, variant);
+  if (!found.missing) return found;
+
+  // a release with only the changed files has no archive: the newest older one that has it, the app updates from there
+  const manifest = `DiplomaChecker-${state.os}-${variant}.manifest.json`;
+  if (!release.assets.some((a) => a.name === manifest)) return found;
+  const older = state.releases.slice(state.releases.indexOf(release) + 1);
+  for (const candidate of older) {
+    const archive = resolveIn(candidate, variant);
+    if (!archive.missing) return archive;
+  }
+  return found;
+}
+
+function resolveIn(release, variant) {
   const pattern = new RegExp(`^DiplomaChecker-${state.os}-${variant}\\.(zip|tar\\.gz)$`, "i");
   const asset = release.assets.find((a) => pattern.test(a.name));
   if (asset) return { url: asset.url, size: formatSize(asset.size), digest: asset.digest };
