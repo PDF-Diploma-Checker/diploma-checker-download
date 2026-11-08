@@ -1,0 +1,36 @@
+name: Publish a small update
+
+on:
+  schedule:
+    - cron: "*/15 * * * *"
+  workflow_dispatch:
+
+permissions:
+  actions: write
+  contents: write
+
+concurrency:
+  group: publish-code-update
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+        with:
+          repository: PDF-Diploma-Checker/app
+          ref: main
+          path: app-source
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install what the update code needs
+        run: pip install requests
+      - name: Publish when the app has a newer version
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python tools/publish_code_update.py --app app-source
