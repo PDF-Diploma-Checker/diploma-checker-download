@@ -8,9 +8,17 @@
 	"orientacja": "pionowa",
 	"justowanie": "tak",
 	"czcionka": {
-		"1" : "FF Sanuk Pro Light",
-		"2" : "FF Sanuk Pro Medium",
-		"3" : "Arial"
+		"1": "FF Sanuk Pro Light",
+		"2": "FF Sanuk Pro Medium",
+		"3": "Arial",
+		"4": "ArialMT",
+		"5": "Arial-BoldMT",
+		"6": "Arial-ItalicMT",
+		"7": "Arial-BoldItalicMT",
+		"8": "LatinModernMath-Regular",
+		"9": "DejaVuSansMono",
+		"10": "DejaVuSansMono-Bold",
+		"11": "DejaVuSansMono-Oblique"
 	},
-	"wymagany_rozdzial_SOTA" : "tak"
+	"wymagany_rozdzial_SOTA": "tak"
 }
