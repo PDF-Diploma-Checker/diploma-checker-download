@@ -47,6 +47,7 @@ const TEXT = {
     issues: "Zgłoś problem",
     license: "Licencja (AGPL-3.0)",
     download: "Pobierz",
+    older_archive: (from, tag) => `To archiwum wersji ${from}. Po uruchomieniu aplikacja zaproponuje aktualizację do ${tag}.`,
     soon: "Wkrótce",
     unavailable: "Niedostępna",
     open_releases: "Otwórz wydania",
@@ -105,6 +106,7 @@ const TEXT = {
     issues: "Report a problem",
     license: "License (AGPL-3.0)",
     download: "Download",
+    older_archive: (from, tag) => `This is the ${from} archive. When started, the app offers the update to ${tag}.`,
     soon: "Coming soon",
     unavailable: "Unavailable",
     open_releases: "Open releases",
@@ -240,7 +242,7 @@ function resolve(variant) {
   const older = state.releases.slice(state.releases.indexOf(release) + 1);
   for (const candidate of older) {
     const archive = resolveIn(candidate, variant);
-    if (!archive.missing) return archive;
+    if (!archive.missing) return { ...archive, fromTag: candidate.tag };
   }
   return found;
 }
@@ -303,6 +305,8 @@ function renderRows() {
     if (shaButton) shaButton.remove();
     const oldParts = $(".parts", row);
     if (oldParts) oldParts.remove();
+    const oldNote = $(".older-archive", row);
+    if (oldNote) oldNote.remove();
 
     if (state.failed) {
       size.textContent = "";
@@ -316,6 +320,12 @@ function renderRows() {
     }
 
     const found = resolve(variant);
+    if (found.fromTag) {
+      const note = document.createElement("p");
+      note.className = "older-archive";
+      note.textContent = tr("older_archive")(found.fromTag, state.tag);
+      $(".info", row).appendChild(note);
+    }
     if (found.parts) {
       size.textContent = found.size;
       const id = `parts-${variant}`;
