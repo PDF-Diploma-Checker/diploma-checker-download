@@ -10,7 +10,9 @@ const CACHE_MINUTES = 10;
 /* Release assets must be named  DiplomaChecker-<windows|linux>-<base|cpu|gpu>.<zip|tar.gz>
    A file above GitHub's 2 GB limit is uploaded in parts: <archive>.001, .002, ... (tools/prepare_release_assets.py in
    the app repository); the page then lists the parts and shows how to join them.
-   Older Extended (GPU) builds that were hosted elsewhere are linked from extended.json. */
+   Older Extended (GPU) builds that were hosted elsewhere are linked from extended.json.
+   The installer is DiplomaChecker-Installer-linux or DiplomaChecker-Installer-windows.exe. It always installs the newest
+   version, so it is enough to attach it to one release; the page offers the newest one it finds. */
 const VARIANTS = ["base", "cpu", "gpu"];
 
 /* ------------------------------------------------------------------- texts */
@@ -49,6 +51,11 @@ const TEXT = {
     download: "Pobierz",
     older_archive: (from, tag) => `To archiwum wersji ${from}. Po uruchomieniu aplikacja zaproponuje aktualizację do ${tag}.`,
     soon: "Wkrótce",
+    installer_name: "Instalator",
+    installer_desc: "Najprostszy sposób: sam wykrywa kartę NVIDIA i podpowiada wersję, pobiera najnowsze wydanie i dodaje aplikację do menu. Bez łączenia części i rozpakowywania.",
+    installer_action: "Pobierz instalator",
+    installer_hint_windows: "Windows może ostrzec, że plik nie ma certyfikatu wydawcy. Wybierz wtedy <strong>Więcej informacji</strong>, a potem <strong>Uruchom mimo to</strong>.",
+    installer_hint_linux: "Po pobraniu pozwól na uruchomienie pliku: <code>chmod +x DiplomaChecker-Installer-linux</code>",
     unavailable: "Niedostępna",
     open_releases: "Otwórz wydania",
     release_meta: (tag, date) => `Wersja ${tag}, wydana ${date}.`,
@@ -108,6 +115,11 @@ const TEXT = {
     download: "Download",
     older_archive: (from, tag) => `This is the ${from} archive. When started, the app offers the update to ${tag}.`,
     soon: "Coming soon",
+    installer_name: "Installer",
+    installer_desc: "The easiest way: it detects an NVIDIA card and suggests a build, downloads the newest release and adds the app to the menu. No parts to join, nothing to unpack.",
+    installer_action: "Download the installer",
+    installer_hint_windows: "Windows may warn that the file has no publisher certificate. If so, choose <strong>More info</strong>, then <strong>Run anyway</strong>.",
+    installer_hint_linux: "After downloading, allow the file to run: <code>chmod +x DiplomaChecker-Installer-linux</code>",
     unavailable: "Unavailable",
     open_releases: "Open releases",
     release_meta: (tag, date) => `Version ${tag}, released ${date}.`,
@@ -410,6 +422,29 @@ function renderParts(found, id) {
   return box;
 }
 
+function findInstaller() {
+  const name = `DiplomaChecker-Installer-${state.os}${state.os === "windows" ? ".exe" : ""}`;
+  for (const release of state.releases) {
+    const asset = release.prerelease ? null : release.assets.find((a) => a.name === name);
+    if (asset) return asset;
+  }
+  return null;
+}
+
+function renderInstaller() {
+  const box = $("#installer");
+  const asset = findInstaller();
+  box.hidden = !asset;
+  // one main action on the page: with the installer the archives become the alternative
+  const basic = $('#variants [data-variant="base"] [data-action]');
+  basic.classList.toggle("btn-primary", !asset);
+  basic.classList.toggle("btn-secondary", !!asset);
+  if (!asset) return;
+  $("#installer-link").href = asset.url;
+  $("[data-size]", box).textContent = formatSize(asset.size);
+  $("#installer-hint").innerHTML = tr("installer_hint_" + state.os);   // our own constant strings
+}
+
 function renderNotice() {
   const notice = $("#notice");
   let message = "";
@@ -519,6 +554,7 @@ function render() {
   renderOs();
   renderVersionSelect();
   renderRows();
+  renderInstaller();
   renderNotice();
   renderMeta();
   renderAllVersions();
