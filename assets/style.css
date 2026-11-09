@@ -81,6 +81,8 @@ a:hover { color: var(--accent-btn); }
 .list { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); }
 .row { display: grid; grid-template-columns: 1fr auto auto; align-items: center; gap: 8px 24px; padding: 20px 24px; }
 .row + .row { border-top: 1px solid var(--border); }
+.installer { margin-bottom: 16px; background: var(--surface); border: 1px solid var(--accent); border-radius: var(--radius); }
+.installer[hidden] { display: none; }
 .name { font-size: 16px; font-weight: 600; }
 .desc { margin-top: 4px; max-width: 52ch; font-size: 14px; line-height: 1.55; color: var(--text-2); }
 .spec { margin-top: 10px; max-width: 64ch; font-size: 13px; line-height: 1.55; color: var(--text-2); }
